@@ -2,6 +2,7 @@ Flask
 flask-cors
 flask-pymongo
 pymongo
-gunicorn
 Flask-Mail
 Flask-Bcrypt
+gunicorn
+gTTS
