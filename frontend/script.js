@@ -1,3 +1,4 @@
+const API_BASE = "https://student-loan-recommendation-system-4-wtui.onrender.com";
 function qs(id){ return document.getElementById(id); }
 
 // ... (toggleSection, onStudyTypeChange, onUnivLevelChange, computePercentage, displayCGPA, computeTotalAmount, submitForm, showRecommendations functions are unchanged) ...
