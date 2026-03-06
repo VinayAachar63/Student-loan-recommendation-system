@@ -1,0 +1,1107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Loan Recommender</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="stylesheet" href="/static/style.css">
+
+  <style>
+    /* ... (Your existing <style> block for the lamp animation is unchanged) ... */
+    *,
+    *:after,
+    *:before {
+      box-sizing: border-box;
+    }
+    :root {
+      --cord: hsl(210, 0%, calc((40 + (var(--on, 0) * 50)) * 1%));
+      --opening: hsl(
+        50,
+        calc((10 + (var(--on, 0) * 80)) * 1%),
+        calc((20 + (var(--on, 0) * 70)) * 1%)
+      );
+      --feature: #0a0a0a;
+      --accent: 210;
+      --tongue: #e06952;
+      --base-top: hsl(
+        var(--accent),
+        0%,
+        calc((40 + (var(--on, 0) * 40)) * 1%)
+      );
+      --base-side: hsl(
+        var(--accent),
+        0%,
+        calc((20 + (var(--on, 0) * 40)) * 1%)
+      );
+      --post: hsl(
+        var(--accent),
+        0%,
+        calc((20 + (var(--on, 0) * 40)) * 1%)
+      );
+      --b-1: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 0)) * 1%),
+        calc((50 + (var(--on, 0) * 50)) * 1%),
+        0.85
+      );
+      --b-2: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 0)) * 1%),
+        calc((20 + (var(--on, 0) * 30)) * 1%),
+        0.25
+      );
+      --b-3: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 0)) * 1%),
+        calc((20 + (var(--on, 0) * 30)) * 1%),
+        0.5
+      );
+      --b-4: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 0)) * 1%),
+        calc((20 + (var(--on, 0) * 30)) * 1%),
+        0.25
+      );
+      --l-1: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 20)) * 1%),
+        calc((50 + (var(--on, 0) * 50)) * 1%),
+        0.85
+      );
+      --l-2: hsla(
+        45,
+        calc((0 + (var(--on, 0) * 20)) * 1%),
+        calc((50 + (var(--on, 0) * 50)) * 1%),
+        0.85
+      );
+      --shade-hue: 320;
+      --t-1: hsl(
+        var(--shade-hue),
+        calc((0 + (var(--on, 0) * 20)) * 1%),
+        calc((30 + (var(--on, 0) * 60)) * 1%)
+      );
+      --t-2: hsl(
+        var(--shade-hue),
+        calc((0 + (var(--on, 0) * 20)) * 1%),
+        calc((20 + (var(--on, 0) * 35)) * 1%)
+      );
+      --t-3: hsl(
+        var(--shade-hue),
+        calc((0 + (var(--on, 0) * 20)) * 1%),
+        calc((10 + (var(--on, 0) * 20)) * 1%)
+      );
+      --glow-color: hsl(320, 40%, 45%);
+      --glow-color-dark: hsl(320, 40%, 35%);
+    }
+    #login-wrapper {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #121921;
+      margin: 0;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8vmin;
+      flex-wrap: wrap;
+      padding: 2rem;
+    }
+    .login-form {
+      background: rgba(18, 25, 33, 0.9);
+      padding: 3rem 2.5rem;
+      border-radius: 20px;
+      min-width: 320px;
+      opacity: 0;
+      transform: scale(0.8) translateY(20px);
+      pointer-events: none;
+      transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      border: 2px solid transparent;
+      box-shadow: 0 0 0px rgba(255, 255, 255, 0);
+    }
+    .login-form.active {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+      pointer-events: all;
+      border-color: var(--glow-color);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1),
+        0 0 30px var(--glow-color),
+        inset 0 0 15px rgba(255, 255, 255, 0.05);
+    }
+    .login-form h2 {
+      color: #fff;
+      font-size: 2rem;
+      margin: 0 0 2rem 0;
+      text-align: center;
+      text-shadow: 0 0 8px var(--glow-color);
+    }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    .form-group label {
+      display: block;
+      color: #aaa;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 5px var(--glow-color);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--glow-color);
+      box-shadow: 0 0 10px var(--glow-color);
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .form-group input::placeholder {
+      color: #666;
+    }
+    .login-btn {
+      width: 100%;
+      padding: 0.875rem;
+      background: linear-gradient(
+        135deg,
+        var(--glow-color),
+        var(--glow-color-dark)
+      );
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin-top: 0.5rem;
+    }
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3),
+        0 0 20px var(--glow-color);
+    }
+    .login-btn:active {
+      transform: translateY(0);
+    }
+    .form-footer {
+      margin-top: 1.5rem;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+    }
+    .forgot-link, .toggle-link {
+      color: #888;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .forgot-link:hover, .toggle-link:hover {
+      color: var(--glow-color);
+      text-shadow: 0 0 10px var(--glow-color);
+    }
+    .radio-controls {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+    .lamp {
+      display: none;
+      height: 40vmin;
+      overflow: visible !important;
+    }
+    .cord {
+      stroke: var(--cord);
+    }
+    .cord--rig {
+      display: none;
+    }
+    .lamp__tongue {
+      fill: var(--tongue);
+    }
+    .lamp__hit {
+      cursor: pointer;
+      opacity: 0;
+    }
+    .lamp__feature {
+      fill: var(--feature);
+    }
+    .lamp__stroke {
+      stroke: var(--feature);
+    }
+    .lamp__mouth,
+    .lamp__light {
+      opacity: var(--on, 0);
+    }
+    .shade__opening {
+      fill: var(--opening);
+    }
+    .shade__opening-shade {
+      opacity: calc(1 - var(--on, 0));
+    }
+    .post__body {
+      fill: var(--post);
+    }
+    .base__top {
+      fill: var(--base-top);
+    }
+    .base__side {
+      fill: var(--base-side);
+    }
+    .top__body {
+      fill: var(--t-3);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login-wrapper">
+    <form class="radio-controls">
+      <input type="radio" id="on" name="status" value="on" />
+      <label for="on">On</label>
+      <input type="radio" id="off" name="status" value="off" />
+      <label for="off">Off</label>
+    </form>
+
+    <div class="login-container">
+      <svg
+        class="lamp"
+        viewBox="0 0 333 484"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g class="lamp__shade shade">
+          <ellipse
+            class="shade__opening"
+            cx="165"
+            cy="220"
+            rx="130"
+            ry="20"
+          />
+          <ellipse
+            class="shade__opening-shade"
+            cx="165"
+            cy="220"
+            rx="130"
+            ry="20"
+            fill="url(#opening-shade)"
+          />
+        </g>
+        <g class="lamp__base base">
+          <path
+            class="base__side"
+            d="M165 464c44.183 0 80-8.954 80-20v-14h-22.869c-14.519-3.703-34.752-6-57.131-6-22.379 0-42.612 2.297-57.131 6H85v14c0 11.046 35.817 20 80 20z"
+          />
+          <path
+            d="M165 464c44.183 0 80-8.954 80-20v-14h-22.869c-14.519-3.703-34.752-6-57.131-6-22.379 0-42.612 2.297-57.131 6H85v14c0 11.046 35.817 20 80 20z"
+            fill="url(#side-shading)"
+          />
+          <ellipse
+            class="base__top"
+            cx="165"
+            cy="430"
+            rx="80"
+            ry="20"
+          />
+          <ellipse
+            cx="165"
+            cy="430"
+            rx="80"
+            ry="20"
+            fill="url(#base-shading)"
+          />
+        </g>
+        <g class="lamp__post post">
+          <path
+            class="post__body"
+            d="M180 142h-30v286c0 3.866 6.716 7 15 7 8.284 0 15-3.134 15-7V142z"
+          />
+          <path
+            d="M180 142h-30v286c0 3.866 6.716 7 15 7 8.284 0 15-3.134 15-7V142z"
+            fill="url(#post-shading)"
+          />
+        </g>
+        <g class="lamp__cords cords">
+          <path
+            class="cord cord--rig"
+            d="M124 187.033V347"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <path
+            class="cord cord--rig"
+            d="M124 187.023s17.007 21.921 17.007 34.846c0 12.925-11.338 23.231-17.007 34.846-5.669 11.615-17.007 21.921-17.007 34.846 0 12.925 17.007 34.846 17.007 34.846"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <path
+            class="cord cord--rig"
+            d="M124 187.017s-21.259 17.932-21.259 30.26c0 12.327 14.173 20.173 21.259 30.26 7.086 10.086 21.259 17.933 21.259 30.26 0 12.327-21.259 30.26-21.259 30.26"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <path
+            class="cord cord--rig"
+            d="M124 187s29.763 8.644 29.763 20.735-19.842 13.823-29.763 20.734c-9.921 6.912-29.763 8.644-29.763 20.735S124 269.939 124 269.939"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <path
+            class="cord cord--rig"
+            d="M124 187.029s-10.63 26.199-10.63 39.992c0 13.794 7.087 26.661 10.63 39.992 3.543 13.331 10.63 26.198 10.63 39.992 0 13.793-10.63 39.992-10.63 39.992"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <path
+            class="cord cord--rig"
+            d="M124 187.033V347"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+          <line
+            class="cord cord--dummy"
+            x1="124"
+            y2="348"
+            x2="124"
+            y1="190"
+            stroke-width="6"
+            stroke-linecap="round"
+          />
+        </g>
+        <path
+          class="lamp__light"
+          d="M290.5 193H39L0 463.5c0 11.046 75.478 20 165.5 20s167-11.954 167-23l-42-267.5z"
+          fill="url(#light)"
+        />
+        <g class="lamp__top top">
+          <path
+            class="top__body"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M164.859 0c55.229 0 100 8.954 100 20l29.859 199.06C291.529 208.451 234.609 200 164.859 200S38.189 208.451 35 219.06L64.859 20c0-11.046 44.772-20 100-20z"
+          />
+          <path
+            class="top__shading"
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M164.859 0c55.229 0 100 8.954 100 20l29.859 199.06C291.529 208.451 234.609 200 164.859 200S38.189 208.451 35 219.06L64.859 20c0-11.046 44.772-20 100-20z"
+            fill="url(#top-shading)"
+          />
+        </g>
+        <g class="lamp__face face">
+          <g class="lamp__mouth">
+            <path
+              d="M165 178c19.882 0 36-16.118 36-36h-72c0 19.882 16.118 36 36 36z"
+              fill="#141414"
+            />
+            <clipPath
+              class="lamp__feature"
+              id="mouth"
+              x="129"
+              y="142"
+              width="72"
+              height="36"
+            >
+              <path
+                d="M165 178c19.882 0 36-16.118 36-36h-72c0 19.882 16.118 36 36 36z"
+                fill="#141414"
+              />
+            </clipPath>
+            <g clip-path="url(#mouth)">
+              <circle
+                class="lamp__tongue"
+                cx="179.4"
+                cy="172.6"
+                r="18"
+              />
+            </g>
+          </g>
+          <g class="lamp__eyes">
+            <path
+              class="lamp__eye lamp__stroke"
+              d="M115 135c0-5.523-5.82-10-13-10s-13 4.477-13 10"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              class="lamp__eye lamp__stroke"
+              d="M241 135c0-5.523-5.82-10-13-10s-13 4.477-13 10"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </g>
+        </g>
+        <defs>
+          <linearGradient
+            id="opening-shade"
+            x1="35"
+            y1="220"
+            x2="295"
+            y2="220"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop />
+            <stop
+              offset="1"
+              stop-color="var(--shade)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+          <linearGradient
+            id="base-shading"
+            x1="85"
+            y1="444"
+            x2="245"
+            y2="444"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="var(--b-1)" />
+            <stop
+              offset="0.8"
+              stop-color="var(--b-2)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+          <linearGradient
+            id="side-shading"
+            x1="119"
+            y1="430"
+            x2="245"
+            y2="430"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="var(--b-3)" />
+            <stop
+              offset="1"
+              stop-color="var(--b-4)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+          <linearGradient
+            id="post-shading"
+            x1="150"
+            y1="288"
+            x2="180"
+            y2="288"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="var(--b-1)" />
+            <stop
+              offset="1"
+              stop-color="var(--b-2)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+          <linearGradient
+            id="light"
+            x1="165.5"
+            y1="218.5"
+            x2="165.5"
+            y2="483.5"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="var(--l-1)" stop-opacity=".2" />
+            <stop
+              offset="1"
+              stop-color="var(--l-2)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+          <linearGradient
+            id="top-shading"
+            x1="56"
+            y1="110"
+            x2="295"
+            y2="110"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stop-color="var(--t-1)" stop-opacity=".8" />
+            <stop
+              offset="1"
+              stop-color="var(--t-2)"
+              stop-opacity="0"
+            />
+          </linearGradient>
+        </defs>
+        <circle
+          class="lamp__hit"
+          cx="124"
+          cy="347"
+          r="66"
+          fill="#C4C4C4"
+          fill-opacity=".1"
+        />
+      </svg>
+      
+      <div class="login-form" id="login-form"> <h2>Login</h2>
+        <form onsubmit="return false;">
+          <div class="form-group">
+            <label for="login-email">Email</label> <input
+              type="email"
+              id="login-email"
+              placeholder="Enter your Email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label> <input
+              type="password"
+              id="login-password"
+              placeholder="Enter your Password"
+              required
+            />
+          </div>
+          <button type="button" id="do-login-btn" class="login-btn">Login</button>
+          <div class="form-footer">
+           <a href="/forgot_password" class="forgot-link">Forgot Password?</a>
+
+            <a id="show-register-form" class="toggle-link">Register</a> </div>
+        </form>
+      </div>
+
+      <div class="login-form" id="register-form">
+        <h2>Register</h2>
+        <form onsubmit="return false;">
+          <div class="form-group">
+            <label for="reg-name">Name</label>
+            <input type="text" id="reg-name" placeholder="Enter your Name" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-email">Email</label>
+            <input type="email" id="reg-email" placeholder="Enter your Email" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input type="password" id="reg-password" placeholder="Create a Password" required />
+          </div>
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirm Password</label>
+            <input type="password" id="reg-confirm-password" placeholder="Confirm Password" required />
+          </div>
+          <button type="button" id="do-register-btn" class="login-btn">Create Account</button>
+          <div class="form-footer">
+            <a id="show-login-form" class="toggle-link">Back to Login</a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <div id="app-wrapper" style="display: none;">
+    <header class="site-header">
+      <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <h1>Student Loan Recommender</h1>
+        </div>
+        <div id="user-info" class="hidden" style="display: flex; align-items: center; gap: 15px;">
+            <span id="welcome-user" style="font-weight: 500;"></span>
+            <button id="logout-btn" class="btn btn-secondary" style="margin: 0;">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <form id="loanForm" onsubmit="return false;">
+        <section class="card">
+          <h2><i class="fas fa-user-circle"></i> Personal Details</h2>
+          <div class="grid-container">
+            <label>Student Name 
+  <input required type="text" id="student_name">
+</label>
+
+<label>Email 
+  <input required type="email" id="email">
+</label>
+
+<label>Phone 
+  <input required type="tel" id="phone" pattern="[0-9]{10}" inputmode="numeric" maxlength="10" title="Enter 10-digit phone number">
+</label>
+
+<label>Aadhaar Number 
+  <input required type="text" id="aadhaar" inputmode="numeric" pattern="[0-9]{12}" maxlength="12" minlength="12" title="Enter 12-digit Aadhaar number">
+</label>
+
+<label>Family Income (annual INR) 
+  <input required type="number" id="family_income" min="0">
+</label>
+<script>
+  document.querySelectorAll('#phone, #aadhaar').forEach(input => {
+    input.addEventListener('input', function () {
+      this.value = this.value.replace(/[^0-9]/g, ''); // remove all non-digits
+    });
+  });
+</script>
+
+          </div>
+        
+          <div class="optional">
+              <h2><i class="fas fa-user-circle"></i> Parents Details(Optional)</h2>
+          <div class="grid-container">
+              <label>Father's Name 
+  <input type="text" id="father_name" pattern="[A-Za-z\s]+" title="Only alphabets allowed" inputmode="text">
+</label>
+
+<label>Father's Phone 
+  <input type="tel" id="father_phone" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter 10-digit number">
+</label>
+
+<label>Mother's Name 
+  <input type="text" id="mother_name" pattern="[A-Za-z\s]+" title="Only alphabets allowed" inputmode="text">
+</label>
+
+<label>Mother's Phone 
+  <input type="tel" id="mother_phone" pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="Enter 10-digit number">
+</label>
+<script>
+  // Allow only letters and spaces for name fields
+  document.querySelectorAll('#father_name, #mother_name').forEach(input => {
+    input.addEventListener('input', function() {
+      this.value = this.value.replace(/[^A-Za-z\s]/g, ''); // Remove non-letters
+    });
+  });
+
+  // Allow only digits for phone fields
+  document.querySelectorAll('#father_phone, #mother_phone').forEach(input => {
+    input.addEventListener('input', function() {
+      this.value = this.value.replace(/[^0-9]/g, ''); // Remove non-digits
+    });
+  });
+</script>
+
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2><i class="fas fa-book-open"></i> Education Details</h2>
+          <label>
+            Study Type
+            <select id="study_type" onchange="onStudyTypeChange()">
+              <option value="">-- Select --</option>
+              <option value="college">College</option>
+              <option value="university">University</option>
+            </select>
+          </label>
+
+          <div id="college_section" class="subsection hidden">
+            <h3>College - 10th Details</h3>
+            <div class="grid-container grid-2">
+              <label>Total Marks (10th) <input type="number" id="t10_total" min="1" onchange="computePercentage('t10_total', 't10_obtained', 't10_percentage_display', '10th')"></label>
+              <label>Obtained Marks (10th) <input type="number" id="t10_obtained" min="0" onchange="computePercentage('t10_total', 't10_obtained', 't10_percentage_display', '10th')"></label>
+            </div>
+            <p id="t10_percentage_display"></p>
+          </div>
+
+          <div id="university_section" class="subsection hidden">
+            <h3>University</h3>
+            <label>
+              Level
+              <select id="univ_level" onchange="onUnivLevelChange()">
+                <option value="">-- Select --</option>
+                <option value="ug">UG</option>
+                <option value="pg">PG</option>
+              </select>
+            </label>
+
+            <div id="ug_section" class="hidden">
+              <h4>UG selected — please enter 12th details</h4>
+               <div class="grid-container grid-2">
+                  <label>Total Marks (12th) <input type="number" id="t12_total" min="1" onchange="computePercentage('t12_total', 't12_obtained', 't12_percentage_display', '12th')"></label>
+                  <label>Obtained Marks (12th) <input type="number" id="t12_obtained" min="0" onchange="computePercentage('t12_total', 't12_obtained', 't12_percentage_display', '12th')"></label>
+              </div>
+              <p id="t12_percentage_display"></p>
+            </div>
+
+            <div id="pg_section" class="hidden">
+              <h4>PG selected — please enter UG CGPA</h4>
+              <label>UG CGPA (scale 10) <input type="number" id="ug_cgpa" min="0" max="10" step="0.01" onchange="displayCGPA()"></label>
+              <p id="ug_cgpa_display"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2><i class="fas fa-hand-holding-usd"></i> Loan Details</h2>
+          <div class="grid-container grid-2">
+              <label>Loan duration (years)
+                <select id="loan_years" onchange="computeTotalAmount()">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </label>
+              <label>College fee per year (INR) <input type="number" id="college_fee" min="0" onchange="computeTotalAmount()"></label>
+          </div>
+          <p id="total_amount_display">Total required amount: INR 0</p>
+          <button type="button" onclick="submitForm()" class="btn btn-primary">
+            <i class="fas fa-paper-plane"></i> Get Recommendations
+            <div class="loader hidden" id="form-loader"></div>
+          </button>
+        </section>
+
+        <section id="results_section" class="card hidden">
+          <h2><i class="fas fa-clipboard-list"></i> Recommendations</h2>
+          <div id="recommendations">
+              <p id="rec_status"></p>
+              <ul id="banks_list"></ul>
+          </div>
+          <div id="emi_calculator" class="hidden">
+            <h3>EMI Calculator</h3>
+            <p>Calculate your estimated monthly payment.</p>
+            <div class="emi-inputs">
+                <label>Loan Amount (INR): <input type="number" id="emi_amount" readonly></label>
+                <label>Interest Rate (%): <input type="number" id="emi_interest" readonly></label>
+                <label>Loan Tenure (Years): <input type="number" id="emi_tenure"></label>
+            </div>
+            <button type="button" onclick="calculateEMI()" class="btn btn-secondary">Calculate</button>
+            <p id="emi_result" class="emi-result-text"></p>
+          </div>
+        </section>
+      </form>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2025 Student Loan Recommender. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <div class="chatbot-container">
+      <div id="chat-window" class="chat-window hidden">
+          <div class="chat-header">
+              <span><i class="fas fa-robot"></i> Loan Bot Assistant</span>
+              <button id="close-chat-btn" class="btn btn-secondary" style="border-radius: 50%; width: 30px; height: 30px; font-size: 0.8rem; background-color: transparent; border: 1px solid white;">
+                  <i class="fas fa-times"></i>
+              </button>
+          </div>
+          
+          <div id="chat-messages">
+              <div class="chat-message bot-message">
+                  <div class="message-bubble">Hello! I'm your Student Loan Assistant. Type 'help' to see what I can answer!</div>
+              </div>
+          </div>
+          <div class="chat-input">
+              <input type="text" id="chat-input-text" placeholder="Ask a question..." onkeydown="if(event.key === 'Enter') sendChatMessage()">
+              <button id="voice-btn" class="btn" title="Start Voice Input"><i class="fas fa-microphone"></i></button>
+              <button id="send-chat-btn" class="btn btn-primary" onclick="sendChatMessage()" style="width: 40px; height: 40px; border-radius: 50%;">
+                  <i class="fas fa-paper-plane"></i>
+              </button>
+          </div>
+      </div>
+      <div id="chat-toggle-btn">
+          <i class="fas fa-comments"></i>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/Draggable.min.js"></script>
+  <script src="https://assets.codepen.io/16327/MorphSVGPlugin3.min.js"></script>
+  
+  <script>
+    const {
+      gsap,
+      gsap: { registerPlugin, set, to, timeline },
+      MorphSVGPlugin,
+      Draggable,
+    } = window;
+    registerPlugin(MorphSVGPlugin);
+    const AUDIO = { CLICK: new Audio("https://assets.codepen.io/605876/click.mp3"), };
+    const ON = document.querySelector("#on");
+    const OFF = document.querySelector("#off");
+    // MODIFIED: Added Register Form ID
+    const LOGIN_FORM = document.querySelector("#login-form");
+    const REGISTER_FORM = document.querySelector("#register-form");
+
+    let startX;
+    let startY;
+    const PROXY = document.createElement("div");
+    const CORDS = gsap.utils.toArray(".cords path");
+    const CORD_DURATION = 0.1;
+    const HIT = document.querySelector(".lamp__hit");
+    const DUMMY_CORD = document.querySelector(".cord--dummy");
+    const ENDX = DUMMY_CORD.getAttribute("x2");
+    const ENDY = DUMMY_CORD.getAttribute("y2");
+    const RESET = () => { set(PROXY, { x: ENDX, y: ENDY, }); };
+    RESET();
+    const STATE = { ON: false, };
+    gsap.set([".cords", HIT], { x: -10, });
+    gsap.set(".lamp__eye", { rotate: 180, transformOrigin: "50% 50%", yPercent: 50, });
+
+    const CORD_TL = timeline({
+      paused: true,
+      onStart: () => {
+        STATE.ON = !STATE.ON;
+        set(document.documentElement, { "--on": STATE.ON ? 1 : 0 });
+        const hue = gsap.utils.random(0, 359);
+        set(document.documentElement, { "--shade-hue": hue });
+        const glowColor = `hsl(${hue}, 40%, 45%)`;
+        const glowColorDark = `hsl(${hue}, 40%, 35%)`;
+        set(document.documentElement, { "--glow-color": glowColor, });
+        set(document.documentElement, { "--glow-color-dark": glowColorDark, });
+        set(".lamp__eye", { rotate: STATE.ON ? 0 : 180, });
+        set([DUMMY_CORD, HIT], { display: "none" });
+        set(CORDS[0], { display: "block" });
+        AUDIO.CLICK.play();
+
+        if (STATE.ON) {
+          ON.setAttribute("checked", true);
+          OFF.removeAttribute("checked");
+          // MODIFIED: Only show login form, not register form
+          LOGIN_FORM.classList.add("active");
+          REGISTER_FORM.classList.remove("active");
+        } else {
+          ON.removeAttribute("checked");
+          OFF.setAttribute("checked", true);
+          LOGIN_FORM.classList.remove("active");
+          REGISTER_FORM.classList.remove("active");
+        }
+      },
+      onComplete: () => {
+        set([DUMMY_CORD, HIT], { display: "block" });
+        set(CORDS[0], { display: "none" });
+        RESET();
+      },
+    });
+
+    for (let i = 1; i < CORDS.length; i++) {
+      CORD_TL.add(
+        to(CORDS[0], {
+          morphSVG: CORDS[i],
+          duration: CORD_DURATION,
+          repeat: 1,
+          yoyo: true,
+        })
+      );
+    }
+    Draggable.create(PROXY, {
+      trigger: HIT,
+      type: "x,y",
+      onPress: (e) => { startX = e.x; startY = e.y; },
+      onDrag: function () {
+        set(DUMMY_CORD, {
+          attr: {
+            x2: this.x,
+            y2: Math.max(400, this.y),
+          },
+        });
+      },
+      onRelease: function (e) {
+        const DISTX = Math.abs(e.x - startX);
+        const DISTY = Math.abs(e.y - startY);
+        const TRAVELLED = Math.sqrt(DISTX * DISTX + DISTY * DISTY);
+        to(DUMMY_CORD, {
+          attr: { x2: ENDX, y2: ENDY },
+          duration: CORD_DURATION,
+          onComplete: () => {
+            if (TRAVELLED > 50) {
+              CORD_TL.restart();
+            } else {
+              RESET();
+            }
+          },
+        });
+      },
+    });
+    gsap.set(".lamp", { display: "block" });
+  </script>
+
+  <script src="/static/script.js"></script>
+
+  <script>
+    // Get all new elements
+    const loginButton = document.getElementById("do-login-btn");
+    const registerButton = document.getElementById("do-register-btn");
+    const loginWrapper = document.getElementById("login-wrapper");
+    const appWrapper = document.getElementById("app-wrapper");
+    const logoutButton = document.getElementById("logout-btn");
+    
+    const showRegisterLink = document.getElementById("show-register-form");
+    const showLoginLink = document.getElementById("show-login-form");
+
+    // --- Helper Functions ---
+    
+    // Shows the main app and user info
+    function initializeApp(name) {
+        if (loginWrapper) loginWrapper.style.display = "none";
+        if (appWrapper) appWrapper.style.display = "block";
+        
+        document.getElementById('user-info').classList.remove('hidden');
+        document.getElementById('welcome-user').innerText = `Welcome, ${name}`;
+    }
+    
+    // Shows the login screen and turns off lamp
+    function showLoginScreen() {
+        if (loginWrapper) loginWrapper.style.display = "grid"; // Use grid to center
+        if (appWrapper) appWrapper.style.display = "none";
+
+        // Turn off lamp
+        if (STATE.ON) {
+            CORD_TL.restart();
+        }
+    }
+
+    // --- API Call Functions ---
+
+    // 1. Handle Login
+    async function handleLogin() {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        if (!email || !password) {
+            alert('Please enter both email and password.');
+            return;
+        }
+
+        try {
+            const resp = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: email, password: password })
+            });
+            const data = await resp.json();
+            if (!resp.ok) { throw new Error(data.error || 'Login failed.'); }
+            
+            initializeApp(data.name);
+
+        } catch (e) {
+            alert('Login Error: ' + e.message);
+        }
+    }
+
+    // 2. Handle Register
+    async function handleRegister() {
+        const name = document.getElementById('reg-name').value;
+        const email = document.getElementById('reg-email').value;
+        const password = document.getElementById('reg-password').value;
+        const confirmPass = document.getElementById('reg-confirm-password').value;
+
+        if (password !== confirmPass) {
+            alert('Passwords do not match.');
+            return;
+        }
+        if (!name || !email || !password) {
+            alert('Please fill out all fields.');
+            return;
+        }
+
+        try {
+            const resp = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: name, email: email, password: password })
+            });
+            const data = await resp.json();
+            if (!resp.ok) { throw new Error(data.error || 'Registration failed.'); }
+            
+            initializeApp(data.name); // Log in and show app
+
+        } catch (e) {
+            alert('Registration Error: ' + e.message);
+        }
+    }
+
+    // 3. Handle Logout
+    async function handleLogout() {
+        try {
+            await fetch('/logout', { method: 'POST' });
+        } catch (e) {
+            console.error('Logout request failed', e);
+        }
+        showLoginScreen();
+    }
+
+    // 4. Check Session on Page Load
+    async function checkSession() {
+        try {
+            const resp = await fetch('/check_session');
+            const data = await resp.json();
+            
+            if (data.logged_in) {
+                // Manually turn on lamp without animation
+                STATE.ON = true;
+                set(document.documentElement, { "--on": 1 });
+                set(".lamp__eye", { rotate: 0 });
+                ON.setAttribute("checked", true);
+                OFF.removeAttribute("checked");
+                
+                initializeApp(data.name);
+            }
+        } catch (e) {
+            console.error('Session check failed', e);
+        }
+    }
+
+    // --- Event Listeners ---
+
+    // Original Login Button Logic (MODIFIED)
+    if (loginButton) {
+      loginButton.addEventListener("click", function() {
+        if (STATE.ON) { 
+          // If lamp is on, try to log in
+          handleLogin();
+        } else {
+          // If lamp is off, first click just turns it on
+          CORD_TL.restart();
+        }
+      });
+    }
+
+    // New Register Button
+    if (registerButton) {
+        registerButton.addEventListener('click', handleRegister);
+    }
+
+    // New Logout Button
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
+
+    // Toggle between Login and Register Forms
+    if (showRegisterLink) {
+        showRegisterLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            LOGIN_FORM.classList.remove('active');
+            REGISTER_FORM.classList.add('active');
+        });
+    }
+    if (showLoginLink) {
+        showLoginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            REGISTER_FORM.classList.remove('active');
+            LOGIN_FORM.classList.add('active');
+        });
+    }
+    
+    // Check session when the DOM is ready
+    document.addEventListener('DOMContentLoaded', checkSession);
+  </script>
+
+</body>
+</html>

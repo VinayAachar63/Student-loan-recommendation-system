@@ -1,0 +1,339 @@
+body {
+    background-image: url('img.jpg'); /* Path to your background image */
+    background-size: cover; /* This makes sure the image covers the entire background */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-attachment: fixed; /* Keeps the background fixed when scrolling */
+    background-position: center center; /* Centers the background image */
+    /* Add any other styles you already have for the body here */
+}
+
+/* To ensure readability, you might want to add a semi-transparent overlay */
+main.container {
+    background-color: rgba(255, 255, 255, 0.9); /* White with 90% opacity */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* --- Professional UI Redesign --- */
+
+/* 1. Variables and Root Styles */
+:root {
+  --primary-color: #0d6efd;
+  --primary-hover: #0b5ed7;
+  --secondary-color: #6c757d;
+  --secondary-hover: #5c636a;
+  --success-color: #198754;
+  --light-bg: #f8f9fa;
+  --border-color: #dee2e6;
+  --text-color: #212529;
+  --text-muted: #6c757d;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+  --border-radius: 0.5rem; /* 8px */
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--light-bg);
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.container { max-width: 960px; margin: 0 auto; padding: 20px 15px; }
+
+/* 2. Header and Footer */
+.site-header {
+  background-color: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 10px 0;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+.site-header .logo { display: flex; align-items: center; gap: 15px; }
+.site-header h1 { font-size: 1.5rem; margin: 0; color: var(--primary-color); font-weight: 600; }
+.site-header .logo .fa-graduation-cap { font-size: 2rem; color: var(--primary-color); }
+.site-footer { text-align: center; margin-top: 40px; padding: 20px 0; background-color: #fff; border-top: 1px solid var(--border-color); color: var(--text-muted); font-size: 0.9rem; }
+
+/* 3. Card and Layout */
+.card { background: white; border-radius: var(--border-radius); padding: 25px 30px; margin-bottom: 25px; box-shadow: var(--card-shadow); border: 1px solid var(--border-color); }
+.card h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 25px 0; color: var(--primary-color); display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+
+/* ✅ Ensure all section titles like Parent Details are blue */
+h2 {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Apply same color to headings inside container or login form */
+main.container h2,
+.login-container h2 {
+  color: var(--primary-color);
+}
+
+.grid-container { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.grid-2 { grid-template-columns: 1fr 1fr; }
+.subsection { margin-top: 15px; padding-left: 15px; border-left: 3px solid var(--primary-color); }
+
+/* 4. Form Elements */
+label { display: block; margin-bottom: 5px; font-weight: 500; font-size: 0.9rem; color: #343a40; }
+input, select { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-family: inherit; font-size: 1rem; transition: border-color 0.2s, box-shadow 0.2s; }
+input:focus, select:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25); }
+p#total_amount_display { font-weight: 600; font-size: 1.1rem; color: #212529; }
+
+/* 5. Buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-size: 0.95rem; font-weight: 500; transition: all 0.2s; }
+.btn-primary { background-color: var(--primary-color); color: white; width: 100%; margin-top: 15px; font-size: 1rem; font-weight: 600; }
+.btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
+.btn-primary:disabled { background-color: var(--secondary-color); cursor: not-allowed; transform: none; }
+.btn-secondary { background-color: var(--secondary-color); color: white; }
+.btn-secondary:hover { background-color: var(--secondary-hover); }
+.btn-apply { background-color: var(--success-color); color: white; }
+.btn-apply:hover { background-color: #157347; }
+.btn-apply:disabled { background-color: var(--success-color); opacity: 0.9; cursor: not-allowed; }
+
+/* 6. Results and EMI Section */
+#rec_status { color: var(--text-muted); border-bottom: 1px solid var(--border-color); padding-bottom: 10px; font-size: 1.1rem; }
+#banks_list { list-style-type: none; padding: 0; margin-top: 20px;}
+#banks_list li { padding: 20px; margin-bottom: 15px; border: 1px solid var(--border-color); border-radius: var(--border-radius); background-color: #fff; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; transition: box-shadow 0.2s; }
+#banks_list li:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.bank-details strong { font-size: 1.1rem; color: #212529; }
+.bank-details span { color: var(--text-muted); font-size: 0.9rem; display: block; }
+.bank-actions { display: flex; gap: 10px; flex-shrink: 0; }
+#emi_calculator { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+.emi-inputs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 15px 0; }
+.emi-result-text { margin-top: 15px; font-size: 1.2rem; font-weight: 600; color: var(--primary-color); background-color: #e7f1ff; padding: 15px; border-radius: var(--border-radius); text-align: center; }
+
+/* 7. Loader Animation */
+.loader { width: 18px; height: 18px; border: 2px solid #FFF; border-bottom-color: transparent; border-radius: 50%; display: inline-block; animation: rotation 1s linear infinite; }
+@keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hidden { display: none !important; }
+
+/* 8. Responsive Design */
+@media (max-width: 768px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  #banks_list li { flex-direction: column; align-items: flex-start; }
+  .bank-actions { width: 100%; margin-top: 15px; }
+  .bank-actions .btn { flex-grow: 1; }
+  
+  /* Chatbot adjustments for mobile */
+  .chatbot-container {
+    right: 15px;
+    bottom: 15px;
+  }
+  .chat-window {
+    width: 90vw;
+    right: 0;
+    bottom: 80px;
+    height: 70vh;
+  }
+}
+
+/* 9. Chatbot Styles */
+.chatbot-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+#chat-toggle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--success-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#chat-toggle-btn:hover {
+    background-color: #157347;
+    transform: scale(1.05);
+}
+
+.chat-window {
+    width: 350px;
+    height: 450px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow);
+    position: absolute;
+    bottom: 75px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+}
+
+.chat-header {
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-header i { font-size: 1.2rem; }
+
+#chat-messages {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: var(--light-bg);
+}
+
+.chat-message {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.user-message {
+    align-self: flex-end;
+}
+.bot-message {
+    align-self: flex-start;
+}
+
+.message-bubble {
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 85%;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.user-message .message-bubble {
+    background-color: var(--primary-color);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.bot-message .message-bubble {
+    background-color: #e9ecef;
+    color: var(--text-color);
+    border-bottom-left-radius: 4px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.chat-input input {
+    padding: 10px;
+    flex-grow: 1;
+    margin-right: 5px;
+    border-radius: 20px;
+}
+
+.chat-input button {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    flex-shrink: 0;
+}
+
+#voice-btn {
+    background-color: var(--secondary-color);
+    font-size: 1.1rem;
+}
+
+#voice-btn:hover {
+    background-color: var(--secondary-hover);
+}
+#voice-btn.recording {
+    background-color: red;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+/*
+ * LOGIN PAGE STYLES
+ * Add these new rules to the end of your /static/style.css file
+*/
+
+/* 1. Apply your background image to the login page */
+body.login-page {
+  background-image: url('/static/img.jpg'); /* Your image path */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* 2. Center the login form on the page */
+.login-container {
+  max-width: 450px;
+  margin: 15vh auto 0; /* '15vh' pushes it down from the top */
+}
+
+/* 3. Style the login card for readability */
+.login-container .card {
+  background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
+  padding: 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.login-container .logo-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.login-container .logo-login .fas {
+  font-size: 2.5rem;
+  color: #007bff;
+}
+
+/* 4. Style the form elements */
+.login-container label {
+  display: block;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.login-container input[type="email"],
+.login-container input[type="password"] {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.login-container .btn-primary {
+  width: 100%;
+  padding: 12px;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+.login-links {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
