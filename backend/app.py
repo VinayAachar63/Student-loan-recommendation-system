@@ -428,7 +428,9 @@ def apply():
         return flask.jsonify({"message": "Application submitted & detailed email sent."})
     except Exception as e:
         return flask.jsonify({"error": str(e)}), 500
-
+@app.route("/")
+def home():
+    return {"message": "Student Loan Recommendation API is running"}
 
 if __name__ == '__main__':
     app.run(debug=True)
